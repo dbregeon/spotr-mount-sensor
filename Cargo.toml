@@ -1,0 +1,17 @@
+[package]
+name = "spotr-mount-sensor"
+version = "0.1.0"
+authors = ["dbregeon <denis.bregeon@digitalbrikes.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate_type = ["dylib"]
+
+[dependencies]
+nix = "0.25.0"
+toml = "0.5.7"
+serde = "1.0.116"
+serde_derive = "1.0.116"
+spotr-sensing = { path = "../spotr-sensing", version = "0.1.0" }
