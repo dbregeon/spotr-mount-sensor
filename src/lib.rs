@@ -2,7 +2,6 @@ extern crate serde_derive;
 extern crate spotr_sensing;
 extern crate toml;
 
-use nix::sys::statvfs;
 use serde_derive::Deserialize;
 use std::result::Result;
 
