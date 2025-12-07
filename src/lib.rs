@@ -2,6 +2,7 @@ extern crate serde_derive;
 extern crate spotr_sensing;
 extern crate toml;
 
+use nix::sys::statvfs::statvfs;
 use serde_derive::Deserialize;
 use std::result::Result;
 
@@ -26,7 +27,18 @@ struct MountSensor {
 
 impl MountSensor {
     fn statvfs(&self) -> Vec<SensorOutput> {
-        vec![]
+        self.mount_points
+            .iter()
+            .flat_map(|m| {
+                statvfs(m.as_str())
+                    .map(|s| (m, s))
+                    .map(|(m, s)| SensorOutput::MountPoint {
+                        name: m.to_string(),
+                        size: s.blocks() * s.fragment_size(),
+                        free: s.blocks_free() * s.fragment_size(),
+                    })
+            })
+            .collect()
     }
 }
 
